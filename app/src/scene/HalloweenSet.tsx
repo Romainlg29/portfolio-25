@@ -99,7 +99,7 @@ const HalloweenSet = () => {
       }
 
       audio.play();
-    }, 20000);
+    }, 15000);
 
     return () => clearInterval(interval);
   }, []);

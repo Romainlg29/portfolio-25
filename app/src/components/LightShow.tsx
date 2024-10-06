@@ -1,9 +1,12 @@
 import { useFrame } from "@react-three/fiber";
 import { FC, useEffect, useMemo, useRef } from "react";
 import { PointLight } from "three";
+import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 
 const LightShow: FC = () => {
   const ref = useRef<PointLight[]>([]);
+
+  const scheme = useColorScheme();
 
   const lights = useMemo(() => {
     return Array.from({ length: 20 }).map((_, index) => {
@@ -18,7 +21,7 @@ const LightShow: FC = () => {
           key={index}
           position={position}
           intensity={0.1}
-          color="#2060ff"
+          color={scheme === ColorScheme.Dark ? "#ff8040" : "#2060ff"}
           ref={(light) => {
             if (light) {
               ref.current.push(light);
@@ -27,7 +30,7 @@ const LightShow: FC = () => {
         />
       );
     });
-  }, []);
+  }, [scheme]);
 
   useEffect(() => {
     const interval = setInterval(() => {
