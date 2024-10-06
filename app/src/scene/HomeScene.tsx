@@ -4,7 +4,9 @@ import Eiffel from "../models/eiffel";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { isHalloween } from "../constants/timing";
-import HalloweenSet from "./HalloweenSet";
+import { lazy, Suspense } from "react";
+
+const HalloweenSet = lazy(() => import("./HalloweenSet"));
 
 const HomeScene = () => {
   const scheme = useColorScheme();
@@ -47,7 +49,9 @@ const HomeScene = () => {
         position={isMediumSize ? [1.2, 0, 0.5] : [0, 0, 0.5]}
       />
 
-      {isHalloween ? <HalloweenSet /> : null}
+      <Suspense fallback={null}>
+        {isHalloween ? <HalloweenSet /> : null}
+      </Suspense>
     </Canvas>
   );
 };
