@@ -5,16 +5,13 @@ Command: npx gltfjsx@6.5.2 eiffel.glb --transform
 
 import { a, useSpring } from "@react-spring/three";
 import { useGLTF } from "@react-three/drei";
-import { extend, GroupProps } from "@react-three/fiber";
+import { GroupProps } from "@react-three/fiber";
 import { FC, useMemo, useState } from "react";
 import LightShow from "../components/LightShow";
 import RotatingSpot from "../components/RotatingSpot";
 import { isShowTime } from "../constants/timing";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import { GlitterMaterial } from "../shaders/glitter/GlitterMaterial";
-
-extend({ GlitterMaterial });
 
 const Eiffel: FC<GroupProps> = (props) => {
   // Retrieve the user's color scheme
