@@ -1,13 +1,13 @@
-import { useMemo } from "react";
+import { a, useTrail } from "@react-spring/three";
+import { useEffect, useMemo } from "react";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import DeadTree from "../models/DeadTree";
+import Ghost from "../models/Ghost";
 import Pumpkin from "../models/Pumpkin";
 import RoundedPumpkin from "../models/RoundedPumpkin";
-import Skull from "../models/Skull";
-import DeadTree from "../models/DeadTree";
 import Scarecrow from "../models/Scarecrow";
-import Ghost from "../models/Ghost";
-import { useTrail, a } from "@react-spring/three";
+import Skull from "../models/Skull";
 
 const HalloweenSet = () => {
   const scheme = useColorScheme();
@@ -88,6 +88,15 @@ const HalloweenSet = () => {
       </>
     );
   }, [scheme, isMediumSize]);
+
+  // Play an ambient sound of owls
+  useEffect(() => {
+    const audio = new Audio("/halloween/owls.mp3");
+
+    const interval = setInterval(() => audio.play(), 20000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>

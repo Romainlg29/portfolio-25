@@ -1,10 +1,10 @@
 import { ContactShadows, Environment, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import Eiffel from "../models/eiffel";
+import { lazy, Suspense } from "react";
+import { isHalloween } from "../constants/timing";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import { isHalloween } from "../constants/timing";
-import { lazy, Suspense } from "react";
+import Eiffel from "../models/Eiffel";
 
 const HalloweenSet = lazy(() => import("./HalloweenSet"));
 
