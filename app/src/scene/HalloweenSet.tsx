@@ -93,7 +93,13 @@ const HalloweenSet = () => {
   useEffect(() => {
     const audio = new Audio("/halloween/owls.mp3");
 
-    const interval = setInterval(() => audio.play(), 20000);
+    const interval = setInterval(() => {
+      if (document.hidden) {
+        return;
+      }
+
+      audio.play();
+    }, 20000);
 
     return () => clearInterval(interval);
   }, []);

@@ -68,8 +68,10 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
       return;
     }
 
-    const audio = new Audio("/halloween/ghost.mp3");
-    audio.play();
+    if (!document.hidden) {
+      const audio = new Audio("/halloween/ghost.mp3");
+      audio.play();
+    }
 
     setAnimate(true);
   }, []);
