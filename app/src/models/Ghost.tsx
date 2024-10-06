@@ -6,8 +6,10 @@ Command: npx gltfjsx@6.5.2 .\Ghost.glb -Tt
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useCallback, useRef, useState } from "react";
+import { ThreeEvent, useFrame } from "@react-three/fiber";
+import { useSpring, a } from "@react-spring/three";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,6 +29,48 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
 
   const ref = useRef<THREE.Group | null>(null);
 
+  const [animate, setAnimate] = useState<boolean>(false);
+
+  const isMediumSize = useMediaQuery("(min-width: 768px)");
+
+  const [animation] = useSpring(
+    () => ({
+      from: {
+        scale: 0.1,
+      },
+      to: {
+        scale: 0,
+      },
+      reverse: !animate,
+      onResolve: () => {
+        if (!ref.current) {
+          return;
+        }
+
+        if (animate) {
+          ref.current?.position.set(
+            Math.random() * (isMediumSize ? 2 : 0.5),
+            Math.random() * (isMediumSize ? 2 : 1),
+            Math.random() * (isMediumSize ? 2 : 1)
+          );
+        }
+
+        setAnimate(false);
+      },
+    }),
+    [animate, isMediumSize]
+  );
+
+  const onClick = useCallback((e: ThreeEvent<MouseEvent>) => {
+    e.stopPropagation();
+
+    if (!ref.current) {
+      return;
+    }
+
+    setAnimate(true);
+  }, []);
+
   useFrame(({ clock }) => {
     if (!ref.current) {
       return;
@@ -38,7 +82,13 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   });
 
   return (
-    <group {...props} ref={ref} dispose={null}>
+    <a.group
+      {...props}
+      scale={animation.scale}
+      ref={ref}
+      dispose={null}
+      onClick={onClick}
+    >
       <mesh
         castShadow
         receiveShadow
@@ -51,7 +101,7 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
         geometry={nodes.group108580628.geometry}
         material={materials.mat21}
       />
-    </group>
+    </a.group>
   );
 }
 

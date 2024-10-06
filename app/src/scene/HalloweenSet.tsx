@@ -7,10 +7,65 @@ import Skull from "../models/Skull";
 import DeadTree from "../models/DeadTree";
 import Scarecrow from "../models/Scarecrow";
 import Ghost from "../models/Ghost";
+import { useTrail, a } from "@react-spring/three";
 
 const HalloweenSet = () => {
   const scheme = useColorScheme();
   const isMediumSize = useMediaQuery("(min-width: 768px)");
+
+  const [trails] = useTrail(
+    8,
+    () => ({
+      from: { scale: 0 },
+      to: { scale: 1 },
+    }),
+    []
+  );
+
+  const elements = useMemo(
+    () => [
+      <Pumpkin
+        scale={0.4}
+        position={isMediumSize ? [1.6, 0.05, 0.7] : [0.4, 0.05, 0.7]}
+      />,
+
+      <Pumpkin
+        scale={0.2}
+        position={isMediumSize ? [1.54, 0.05, 0.78] : [0.36, 0.05, 0.78]}
+        rotation-y={Math.PI / 4}
+      />,
+
+      <DeadTree
+        scale={0.05}
+        position={isMediumSize ? [2.2, 0.05, 0.6] : [0.7, 0.05, 0.6]}
+        rotation-y={Math.PI / 4}
+      />,
+
+      <DeadTree
+        scale={0.05}
+        position={isMediumSize ? [0.1, 0.05, 0.2] : [-0.9, 0.05, 0.2]}
+        rotation-y={-Math.PI / 8}
+      />,
+
+      <Scarecrow
+        scale={0.05}
+        position={isMediumSize ? [0.1, 0.05, 0.25] : [-0.9, 0.05, 0.25]}
+      />,
+
+      <RoundedPumpkin
+        scale={0.01}
+        position={isMediumSize ? [1.19, 1.32, 0.6] : [-0.01, 1.32, 0.6]}
+      />,
+
+      <Skull
+        scale={0.025}
+        position={isMediumSize ? [1.22, 1.32, 0.62] : [0.02, 1.32, 0.62]}
+      />,
+
+      <Ghost position={isMediumSize ? [1.3, 1.8, 0.7] : [0.1, 1.8, 0.2]} />,
+    ],
+    [isMediumSize]
+  );
 
   const lights = useMemo(() => {
     if (scheme === ColorScheme.Light) {
@@ -36,48 +91,11 @@ const HalloweenSet = () => {
 
   return (
     <>
-      <Pumpkin
-        scale={0.4}
-        position={isMediumSize ? [1.6, 0.05, 0.7] : [0.4, 0.05, 0.7]}
-      />
-
-      <Pumpkin
-        scale={0.2}
-        position={isMediumSize ? [1.54, 0.05, 0.78] : [0.36, 0.05, 0.78]}
-        rotation-y={Math.PI / 4}
-      />
-
-      <DeadTree
-        scale={0.05}
-        position={isMediumSize ? [2.2, 0.05, 0.6] : [0.7, 0.05, 0.6]}
-        rotation-y={Math.PI / 4}
-      />
-
-      <DeadTree
-        scale={0.05}
-        position={isMediumSize ? [0.1, 0.05, 0.2] : [-0.9, 0.05, 0.2]}
-        rotation-y={-Math.PI / 8}
-      />
-
-      <Scarecrow
-        scale={0.05}
-        position={isMediumSize ? [0.1, 0.05, 0.25] : [-0.9, 0.05, 0.25]}
-      />
-
-      <RoundedPumpkin
-        scale={0.01}
-        position={isMediumSize ? [1.19, 1.32, 0.6] : [-0.01, 1.32, 0.6]}
-      />
-
-      <Skull
-        scale={0.025}
-        position={isMediumSize ? [1.22, 1.32, 0.62] : [0.02, 1.32, 0.62]}
-      />
-
-      <Ghost
-        scale={0.1}
-        position={isMediumSize ? [1.3, 1.8, 0.7] : [0.1, 1.8, 0.2]}
-      />
+      {trails.map(({ scale }, i) => (
+        <a.group scale={scale} key={`halloween-${i}`}>
+          {elements[i]}
+        </a.group>
+      ))}
 
       {lights}
     </>

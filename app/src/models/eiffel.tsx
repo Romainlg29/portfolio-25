@@ -62,7 +62,11 @@ const Eiffel: FC<GroupProps> = (props) => {
         scale={[0.026, 0.005, 0.005]}
         castShadow
         receiveShadow
-        onClick={() => setIsGlittering((prev) => !prev)}
+        onClick={(e) => {
+          e.stopPropagation();
+
+          setIsGlittering((prev) => !prev);
+        }}
       >
         {material}
       </mesh>
