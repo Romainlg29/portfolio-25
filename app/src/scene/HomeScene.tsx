@@ -3,6 +3,8 @@ import { Canvas } from "@react-three/fiber";
 import Eiffel from "../models/eiffel";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import { isHalloween } from "../constants/timing";
+import HalloweenSet from "./HalloweenSet";
 
 const HomeScene = () => {
   const scheme = useColorScheme();
@@ -34,7 +36,7 @@ const HomeScene = () => {
       <ContactShadows
         scale={10}
         far={1}
-        blur={2}
+        blur={0.8}
         color={scheme === ColorScheme.Dark ? "#fff" : "#000"}
       />
 
@@ -44,6 +46,8 @@ const HomeScene = () => {
         rotation-y={-Math.PI / 8}
         position={isMediumSize ? [1.2, 0, 0.5] : [0, 0, 0.5]}
       />
+
+      {isHalloween ? <HalloweenSet /> : null}
     </Canvas>
   );
 };

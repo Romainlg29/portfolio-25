@@ -3,3 +3,8 @@
  */
 export const isShowTime =
   new Date().getHours() >= 20 || new Date().getHours() <= 6;
+
+/**
+ * Halloween mode is enabled during the month of October.
+ */
+export const isHalloween = new Date().getMonth() === 9;
