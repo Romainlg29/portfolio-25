@@ -31,5 +31,5 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/Skull-transformed.glb");
+useGLTF.preload("/halloween/Skull-transformed.glb");
 export default Model;

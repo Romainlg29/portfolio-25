@@ -1,5 +1,6 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
+import { z } from "zod";
 
 const HomeScene = lazy(() => import("../scene/HomeScene"));
 
@@ -41,6 +42,11 @@ const Home = () => {
   );
 };
 
-export const Route = createLazyFileRoute("/")({
+const searchParams = z.object({
+  event: z.enum(["halloween", "christmas"]).optional(),
+});
+
+export const Route = createFileRoute("/")({
+  validateSearch: (s) => searchParams.parse(s),
   component: Home,
 });

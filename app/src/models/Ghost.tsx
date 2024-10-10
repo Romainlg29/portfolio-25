@@ -110,6 +110,6 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/Ghost-transformed.glb");
+useGLTF.preload("/halloween/Ghost-transformed.glb");
 
 export default Model;

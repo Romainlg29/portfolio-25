@@ -40,6 +40,6 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/Pumpkin_round-transformed.glb");
+useGLTF.preload("/halloween/Pumpkin_round-transformed.glb");
 
 export default Model;

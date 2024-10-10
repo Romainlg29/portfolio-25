@@ -8,3 +8,8 @@ export const isShowTime =
  * Halloween mode is enabled during the month of October.
  */
 export const isHalloween = new Date().getMonth() === 9;
+
+/**
+ * Christmas mode is enabled during the month of December.
+ */
+export const isChristmas = new Date().getMonth() === 11;

@@ -32,6 +32,6 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/dead_tree-transformed.glb");
+useGLTF.preload("/halloween/dead_tree-transformed.glb");
 
 export default Model;

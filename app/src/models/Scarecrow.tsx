@@ -30,6 +30,6 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/Scarecrow-transformed.glb");
+useGLTF.preload("/halloween/Scarecrow-transformed.glb");
 
 export default Model;
