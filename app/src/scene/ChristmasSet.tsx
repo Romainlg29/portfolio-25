@@ -68,6 +68,21 @@ const ChristmasSet = () => {
     );
   }, [scheme, isMediumSize]);
 
+  const snow = useMemo(
+    () =>
+      isMediumSize ? (
+        <Sparkles
+          count={200}
+          color={"#fff"}
+          scale={3}
+          size={2}
+          speed={0.3}
+          position={isMediumSize ? [1, 0.5, 0.5] : [0, 0.5, 0]}
+        />
+      ) : null,
+    [isMediumSize]
+  );
+
   // Play an ambient sound
   useEffect(() => {
     const audio = new Audio("/christmas/ambiant.mp3");
@@ -132,16 +147,8 @@ const ChristmasSet = () => {
         </a.group>
       ))}
 
-      <Sparkles
-        count={200}
-        color={"#fff"}
-        scale={3}
-        size={2}
-        speed={0.3}
-        position={[1, 0.5, 0.5]}
-      />
-
       {lights}
+      {snow}
     </>
   );
 };
