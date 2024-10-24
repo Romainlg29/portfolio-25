@@ -98,8 +98,12 @@ const HalloweenSet = () => {
         return;
       }
 
+      if (!navigator.userActivation.hasBeenActive) {
+        return;
+      }
+
       audio.play();
-    }, 15000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
