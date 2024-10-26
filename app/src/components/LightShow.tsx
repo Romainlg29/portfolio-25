@@ -3,7 +3,11 @@ import { FC, useEffect, useMemo, useRef } from "react";
 import { PointLight } from "three";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 
-const LightShow: FC = () => {
+type LightShowProps = {
+  isGlittering?: boolean;
+};
+
+const LightShow: FC<LightShowProps> = ({ isGlittering = false }) => {
   const ref = useRef<PointLight[]>([]);
 
   const scheme = useColorScheme();
@@ -33,6 +37,14 @@ const LightShow: FC = () => {
   }, [scheme]);
 
   useEffect(() => {
+    if (!isGlittering) {
+      ref.current.forEach((light) => {
+        light.intensity = 0;
+      });
+    }
+  }, [isGlittering]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       ref.current.forEach((light) => {
         const x = Math.random();
@@ -49,6 +61,10 @@ const LightShow: FC = () => {
   }, []);
 
   useFrame(({ clock }) => {
+    if (!isGlittering) {
+      return;
+    }
+
     ref.current.forEach((light) => {
       light.intensity = Math.abs(
         Math.sin(clock.getElapsedTime() * 4 * Math.random())

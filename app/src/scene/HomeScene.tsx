@@ -1,19 +1,17 @@
 import { ContactShadows, Environment, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { useSearch } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 import { isChristmas, isHalloween } from "../constants/timing";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
-import { useMediaQuery } from "../hooks/useMediaQuery";
-import Eiffel from "../models/Eiffel";
-import { useSearch } from "@tanstack/react-router";
+
+const Eiffel = lazy(() => import("../models/eiffel/Eiffel"));
 
 const HalloweenSet = lazy(() => import("./HalloweenSet"));
 const ChristmasSet = lazy(() => import("./ChristmasSet"));
 
 const HomeScene = () => {
   const scheme = useColorScheme();
-  const isMediumSize = useMediaQuery("(min-width: 768px)");
-
   const { event } = useSearch({ from: "/" });
 
   return (
@@ -48,18 +46,17 @@ const HomeScene = () => {
 
       <Environment preset="sunset" backgroundIntensity={3} />
 
-      <Eiffel
-        rotation-y={-Math.PI / 8}
-        position={isMediumSize ? [1.2, 0, 0.5] : [0, 0, 0.5]}
-      />
-
       <Suspense fallback={null}>
-        {(isHalloween && !event) || event === "halloween" ? (
-          <HalloweenSet />
-        ) : null}
-        {(isChristmas && !event) || event === "christmas" ? (
-          <ChristmasSet />
-        ) : null}
+        <Eiffel />
+
+        <Suspense fallback={null}>
+          {(isHalloween && !event) || event === "halloween" ? (
+            <HalloweenSet />
+          ) : null}
+          {(isChristmas && !event) || event === "christmas" ? (
+            <ChristmasSet />
+          ) : null}
+        </Suspense>
       </Suspense>
     </Canvas>
   );

@@ -9,7 +9,7 @@ import { ThreeEvent, useFrame } from "@react-three/fiber";
 import { useCallback, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
-import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 type GLTFResult = GLTF & {
   nodes: {

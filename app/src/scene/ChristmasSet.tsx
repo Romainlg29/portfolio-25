@@ -1,25 +1,17 @@
-import { a, useTrail } from "@react-spring/three";
-import { useEffect, useMemo } from "react";
+import { Sparkles } from "@react-three/drei";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import CandyCane from "../models/CandyCane";
-import ChristmasPresents from "../models/ChristmasPresents";
-import SquaredChristmasGifts from "../models/SquaredChristmasGifts";
-import { Sparkles } from "@react-three/drei";
-import Snowman from "../models/Snowman";
+import CandyCane from "../models/christmas/CandyCane";
+import ChristmasPresents from "../models/christmas/ChristmasPresents";
+import Snowman from "../models/christmas/Snowman";
+import SquaredChristmasGifts from "../models/christmas/SquaredChristmasGifts";
 
 const ChristmasSet = () => {
   const scheme = useColorScheme();
   const isMediumSize = useMediaQuery("(min-width: 768px)");
 
-  const [trails] = useTrail(
-    8,
-    () => ({
-      from: { scale: 0 },
-      to: { scale: 1 },
-    }),
-    []
-  );
+  const [items, setItems] = useState<JSX.Element[]>([]);
 
   const elements = useMemo(
     () => [
@@ -45,6 +37,19 @@ const ChristmasSet = () => {
     ],
     [isMediumSize]
   );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (items.length === elements.length) {
+        clearInterval(interval);
+        return;
+      }
+
+      setItems((items) => [...items, elements[items.length]]);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, [elements, items]);
 
   const lights = useMemo(() => {
     if (scheme === ColorScheme.Light) {
@@ -141,10 +146,8 @@ const ChristmasSet = () => {
 
   return (
     <>
-      {trails.map(({ scale }, i) => (
-        <a.group scale={scale} key={`halloween-${i}`}>
-          {elements[i]}
-        </a.group>
+      {items.map((i, k) => (
+        <Fragment key={k}>{i}</Fragment>
       ))}
 
       {lights}

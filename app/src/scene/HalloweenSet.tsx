@@ -1,26 +1,18 @@
-import { a, useTrail } from "@react-spring/three";
-import { useEffect, useMemo } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import DeadTree from "../models/DeadTree";
-import Ghost from "../models/Ghost";
-import Pumpkin from "../models/Pumpkin";
-import RoundedPumpkin from "../models/RoundedPumpkin";
-import Scarecrow from "../models/Scarecrow";
-import Skull from "../models/Skull";
+import DeadTree from "../models/halloween/DeadTree";
+import Ghost from "../models/halloween/Ghost";
+import Pumpkin from "../models/halloween/Pumpkin";
+import RoundedPumpkin from "../models/halloween/RoundedPumpkin";
+import Scarecrow from "../models/halloween/Scarecrow";
+import Skull from "../models/halloween/Skull";
 
 const HalloweenSet = () => {
   const scheme = useColorScheme();
   const isMediumSize = useMediaQuery("(min-width: 768px)");
 
-  const [trails] = useTrail(
-    8,
-    () => ({
-      from: { scale: 0 },
-      to: { scale: 1 },
-    }),
-    []
-  );
+  const [items, setItems] = useState<JSX.Element[]>([]);
 
   const elements = useMemo(
     () => [
@@ -67,6 +59,19 @@ const HalloweenSet = () => {
     [isMediumSize]
   );
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (items.length === elements.length) {
+        clearInterval(interval);
+        return;
+      }
+
+      setItems((items) => [...items, elements[items.length]]);
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, [elements, items]);
+
   const lights = useMemo(() => {
     if (scheme === ColorScheme.Light) {
       return null;
@@ -110,10 +115,8 @@ const HalloweenSet = () => {
 
   return (
     <>
-      {trails.map(({ scale }, i) => (
-        <a.group scale={scale} key={`halloween-${i}`}>
-          {elements[i]}
-        </a.group>
+      {items.map((i, k) => (
+        <Fragment key={k}>{i}</Fragment>
       ))}
 
       {lights}
