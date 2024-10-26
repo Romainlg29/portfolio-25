@@ -10,12 +10,16 @@ const Outdated: FC = () => {
   const [reversed, setReversed] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!from || !from.startsWith("/posts")) {
+      return;
+    }
+
     const to = setTimeout(async () => {
       setReversed(true);
     }, 5000);
 
     return () => clearTimeout(to);
-  }, [setReversed]);
+  }, [from, setReversed]);
 
   const [ref] = useSpring(
     () => ({
