@@ -7,6 +7,7 @@ import { a, useSpring } from "@react-spring/three";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+import { useState } from "react";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -28,6 +29,8 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
     "/christmas/snowman-transformed.glb"
   ) as GLTFResult;
 
+  const [jump, setJump] = useState<boolean>(false);
+
   const [animation] = useSpring(
     () => ({
       from: {
@@ -40,8 +43,31 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
     [props.scale]
   );
 
+  const [animateJump] = useSpring(
+    () => ({
+      from: {
+        y: (props.position as number[])?.[1] ?? 0,
+      },
+      to: {
+        y: ((props.position as number[])?.[1] ?? 0) + 0.2,
+      },
+      reverse: !jump,
+      config: {
+        duration: 200,
+      },
+      onResolve: () => setJump(false),
+    }),
+    [jump, props.position]
+  );
+
   return (
-    <a.group {...props} scale={animation.scale} dispose={null}>
+    <a.group
+      {...props}
+      scale={animation.scale}
+      position-y={animateJump.y}
+      dispose={null}
+      onClick={() => setJump(true)}
+    >
       <mesh
         geometry={nodes.body.geometry}
         // @ts-expect-error does not have a type
