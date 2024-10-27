@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import DeadTree from "../models/halloween/DeadTree";
@@ -7,6 +7,7 @@ import Pumpkin from "../models/halloween/Pumpkin";
 import RoundedPumpkin from "../models/halloween/RoundedPumpkin";
 import Scarecrow from "../models/halloween/Scarecrow";
 import Skull from "../models/halloween/Skull";
+import { SettingsContext } from "../contexts/SettingsContext";
 
 const HalloweenSet = () => {
   const scheme = useColorScheme();
@@ -94,11 +95,17 @@ const HalloweenSet = () => {
     );
   }, [scheme, isMediumSize]);
 
+  const { sound } = useContext(SettingsContext);
+
   // Play an ambient sound of owls
   useEffect(() => {
     const audio = new Audio("/halloween/owls.mp3");
 
     const interval = setInterval(() => {
+      if (!sound) {
+        return;
+      }
+
       if (document.hidden) {
         return;
       }
@@ -111,7 +118,7 @@ const HalloweenSet = () => {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [sound]);
 
   return (
     <>

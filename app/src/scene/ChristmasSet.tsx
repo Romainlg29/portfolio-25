@@ -1,11 +1,12 @@
 import { Sparkles } from "@react-three/drei";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import CandyCane from "../models/christmas/CandyCane";
 import ChristmasPresents from "../models/christmas/ChristmasPresents";
 import Snowman from "../models/christmas/Snowman";
 import SquaredChristmasGifts from "../models/christmas/SquaredChristmasGifts";
+import { SettingsContext } from "../contexts/SettingsContext";
 
 const ChristmasSet = () => {
   const scheme = useColorScheme();
@@ -88,6 +89,8 @@ const ChristmasSet = () => {
     [isMediumSize]
   );
 
+  const { sound } = useContext(SettingsContext);
+
   // Play an ambient sound
   useEffect(() => {
     const audio = new Audio("/christmas/ambiant.mp3");
@@ -98,6 +101,12 @@ const ChristmasSet = () => {
     let interval: number | undefined = undefined;
 
     const onVisibility = () => {
+      // If the user has disabled the sound, pause the audio
+      if (!sound) {
+        audio.pause();
+        return;
+      }
+
       // If the page is hidden, pause the audio
       if (document.hidden) {
         audio.pause();
@@ -142,7 +151,7 @@ const ChristmasSet = () => {
         clearInterval(interval);
       }
     };
-  }, []);
+  }, [sound]);
 
   return (
     <>

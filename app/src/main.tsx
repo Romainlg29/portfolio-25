@@ -8,6 +8,7 @@ import Analytics from "./components/Analytics";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import SettingsProvider from "./contexts/SettingsContext";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -21,7 +22,9 @@ declare module "@tanstack/react-router" {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Analytics />
-    <RouterProvider router={router} />
+    <SettingsProvider>
+      <Analytics />
+      <RouterProvider router={router} />
+    </SettingsProvider>
   </StrictMode>
 );

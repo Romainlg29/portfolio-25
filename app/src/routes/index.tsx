@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 import { z } from "zod";
+import SoundToggle from "../components/SoundToggle";
+import GlitteringToggle from "../components/GlitteringToggle";
 
 const HomeScene = lazy(() => import("../scene/HomeScene"));
 const Outdated = lazy(() => import("../components/Outdated"));
@@ -38,6 +40,11 @@ const Home = () => {
             </a>
           </div>
         </div>
+      </div>
+
+      <div className="absolute top-2 right-2 flex gap-2">
+        <GlitteringToggle />
+        <SoundToggle />
       </div>
 
       <Suspense fallback={null}>

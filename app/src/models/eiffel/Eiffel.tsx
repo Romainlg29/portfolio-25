@@ -1,35 +1,29 @@
 import { ThreeEvent } from "@react-three/fiber";
-import { lazy, Suspense, useCallback, useState } from "react";
+import { lazy, Suspense, useCallback, useContext } from "react";
 import LightShow from "../../components/LightShow";
 import RotatingSpot from "../../components/RotatingSpot";
-import { isShowTime } from "../../constants/timing";
-import { ColorScheme, useColorScheme } from "../../hooks/useColorScheme";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { SettingsContext } from "../../contexts/SettingsContext";
 
 const EiffelBase = lazy(() => import("./EiffelBase"));
 const EiffelMiddle = lazy(() => import("./EiffelMiddle"));
 const EiffelTop = lazy(() => import("./EiffelTop"));
 
 const Eiffel = () => {
-  // Retrieve the user's color scheme
-  const scheme = useColorScheme();
-
   // Check the screen size
   const isMediumSize = useMediaQuery("(min-width: 768px)");
 
-  // Reduce motion
-  const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
-
-  // State to toggle the glittering
-  const [isGlittering, setIsGlittering] = useState<boolean>(
-    (isShowTime || scheme === ColorScheme.Dark) && !reduced
-  );
+  const { glittering, setGlittering } = useContext(SettingsContext);
 
   // Toggle the glittering
-  const toggle = useCallback((e: ThreeEvent<MouseEvent>) => {
-    e.stopPropagation();
-    setIsGlittering((prev) => !prev);
-  }, []);
+  const toggle = useCallback(
+    (e: ThreeEvent<MouseEvent>) => {
+      e.stopPropagation();
+
+      setGlittering((prev) => !prev);
+    },
+    [setGlittering]
+  );
 
   return (
     <group
@@ -40,7 +34,7 @@ const Eiffel = () => {
       <RotatingSpot speed={0.5} position={[0, 2.4, 0]} />
       <pointLight position={[0, 2.44, 0]} intensity={0.01} />
 
-      <LightShow isGlittering={isGlittering} />
+      <LightShow isGlittering={glittering} />
 
       <Suspense fallback={null}>
         <EiffelBase onClick={toggle} />
