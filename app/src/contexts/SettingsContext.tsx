@@ -4,6 +4,8 @@ import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 import { isShowTime } from "../constants/timing";
 
 type SettingsContext = {
+  reduced: boolean;
+
   sound: boolean;
   glittering: boolean;
 
@@ -14,6 +16,8 @@ type SettingsContext = {
 };
 
 export const SettingsContext = createContext<SettingsContext>({
+  reduced: false,
+
   glittering: false,
   sound: false,
 
@@ -46,8 +50,9 @@ const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
       sound,
       setSound,
       setGlittering,
+      reduced,
     }),
-    [glittering, sound]
+    [glittering, sound, reduced]
   );
 
   return (

@@ -8,9 +8,9 @@ const SoundToggle: FC = () => {
   return (
     <button onClick={() => setSound((p) => !p)}>
       {sound ? (
-        <Volume2 className="w-8 h-8 dark:text-white" />
+        <Volume2 className="w-8 h-8 text-gray-500 dark:text-white" />
       ) : (
-        <VolumeX className="w-8 h-8 dark:text-white" />
+        <VolumeX className="w-8 h-8 text-gray-500 dark:text-white" />
       )}
     </button>
   );
