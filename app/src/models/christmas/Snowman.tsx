@@ -44,26 +44,22 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
     <a.group {...props} scale={animation.scale} dispose={null}>
       <mesh
         geometry={nodes.body.geometry}
-        material={materials.snownman_body}
+        // @ts-expect-error does not have a type
+        material={materials.PaletteMaterial001}
         position={[0, 1, 0]}
       />
       <mesh
         geometry={nodes.left_eye.geometry}
-        material={materials.snowman_eye}
+        // @ts-expect-error does not have a type
+        material={materials.PaletteMaterial002}
         position={[0.3, 2.5, 0.541]}
       />
       <mesh
         geometry={nodes.nose.geometry}
-        material={materials.snowman_carrot_nose}
+        // @ts-expect-error does not have a type
+        material={materials.PaletteMaterial003}
         position={[0, 2.25, 0.8]}
         rotation={[Math.PI / 2, 0, 0]}
-      />
-      <mesh
-        geometry={nodes.button_middle.geometry}
-        material={materials.snowman_buttons}
-        position={[0, 1.3, 0.95]}
-        rotation={[1.347, 0, 0]}
-        scale={1.25}
       />
     </a.group>
   );
