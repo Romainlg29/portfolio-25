@@ -12,4 +12,5 @@ export const isHalloween = new Date().getMonth() === 9;
 /**
  * Christmas mode is enabled during the month of December.
  */
-export const isChristmas = new Date().getMonth() === 11;
+export const isChristmas =
+  new Date().getMonth() === 10 || new Date().getMonth() === 11;
