@@ -98,7 +98,7 @@ const ChristmasSet = () => {
     audio.loop = true;
     audio.volume = 0.5;
 
-    let interval: number | undefined = undefined;
+    let interval: ReturnType<typeof setInterval> | undefined = undefined;
 
     const onVisibility = () => {
       // If the user has disabled the sound, pause the audio

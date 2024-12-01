@@ -9,6 +9,7 @@ import Analytics from "./components/Analytics";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 import SettingsProvider from "./contexts/SettingsContext";
+import { ThemeProvider } from "./components/theme-provider";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -24,7 +25,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <SettingsProvider>
       <Analytics />
-      <RouterProvider router={router} />
+      <ThemeProvider defaultTheme="system" storageKey="app-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </SettingsProvider>
   </StrictMode>
 );

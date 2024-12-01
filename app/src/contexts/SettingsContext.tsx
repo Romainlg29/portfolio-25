@@ -41,8 +41,8 @@ const SettingsProvider: FC<SettingsProviderProps> = ({ children }) => {
     (isShowTime || scheme === ColorScheme.Dark) && !reduced
   );
 
-  // Initialize the sound state as true by default
-  const [sound, setSound] = useState<boolean>(true);
+  // Initialize the sound state as false by default
+  const [sound, setSound] = useState<boolean>(false);
 
   const value: SettingsContext = useMemo(
     () => ({
