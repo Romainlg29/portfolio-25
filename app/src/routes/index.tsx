@@ -35,7 +35,7 @@ const Home = () => {
                 variant={"outline"}
                 className="px-2 py-1 text-md text-black dark:text-gray-200 font-semibold pointer-events-auto"
               >
-                Linkedin
+                Github
               </Button>
             </a>
           </div>
