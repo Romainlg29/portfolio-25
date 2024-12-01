@@ -10,13 +10,11 @@ const Player = (props: PlayerProps) => {
     <group {...props}>
       <KeyboardControls map={keyboard}>
         <Ecctrl
-          camLowLimit={Math.PI / 12}
+          camLowLimit={0}
           camUpLimit={Math.PI / 3}
-          camMinDis={-3}
           camMaxDis={-20}
           maxVelLimit={4}
-          camInitDir={{ x: Math.PI / 8, y: Math.PI / 4 }}
-          camCollision={false}
+          camInitDir={{ x: 0, y: (-2 * Math.PI) / 4 }}
         >
           <Character />
         </Ecctrl>

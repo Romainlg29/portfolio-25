@@ -1,11 +1,17 @@
-type CharacterProps = JSX.IntrinsicElements["mesh"];
+import { ContactShadows } from "@react-three/drei";
+
+type CharacterProps = JSX.IntrinsicElements["group"];
 
 const Character = (props: CharacterProps) => {
   return (
-    <mesh {...props}>
-      <cylinderGeometry args={[0.2, 0.2, 1, 32]} />
-      <meshStandardMaterial color="lightblue" />
-    </mesh>
+    <group {...props}>
+      <mesh castShadow receiveShadow>
+        <cylinderGeometry args={[0.2, 0.2, 1, 32]} />
+        <meshStandardMaterial color="lightblue" />
+      </mesh>
+
+      {/* <ContactShadows /> */}
+    </group>
   );
 };
 

@@ -1,21 +1,31 @@
 import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
-import { useEffect } from "react";
 
-type PavementProps = JSX.IntrinsicElements["mesh"];
+type PavementProps = JSX.IntrinsicElements["mesh"] & {
+  /**
+   * The width of the pavement in meters.
+   * @default 2
+   */
+  width?: number;
 
-const Pavement = (props: PavementProps) => {
+  /**
+   * The length of the pavement in meters.
+   * @default 2
+   */
+  length?: number;
+};
+
+const Pavement = ({ width = 2, length = 2, ...props }: PavementProps) => {
   const textures = useTexture({
-    colorMap: "/textures/pavement/color_1k.jpg",
-    normalMap: "/textures/pavement/normal_1k.png",
-    roughnessMap: "/textures/pavement/roughness_1k.jpg",
-    aoMap: "/textures/pavement/ao_1k.jpg",
-    heightMap: "/textures/pavement/height_1k.png",
+    map: "/textures/pavement/cobblestone_color_diff_1k.jpg",
+    normalMap: "/textures/pavement/cobblestone_color_nor_gl_1k.jpg",
+    roughnessMap: "/textures/pavement/cobblestone_color_rough_1k.jpg",
+    displacementMap: "/textures/pavement/cobblestone_color_disp_1k.jpg",
   });
 
   return (
-    <mesh {...props}>
-      <boxGeometry args={[20, 20, 0.1]} />
+    <mesh scale={1} {...props}>
+      <planeGeometry args={[5, 5, 2, 2]} />
       <meshStandardMaterial {...textures} />
     </mesh>
   );

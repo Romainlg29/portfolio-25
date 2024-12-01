@@ -1,15 +1,10 @@
-import {
-  ContactShadows,
-  Environment,
-  OrbitControls,
-  Preload,
-  Sky,
-} from "@react-three/drei";
+import { Preload, Sky, SoftShadows } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { Physics, RigidBody } from "@react-three/rapier";
 import Player from "./Player";
-import Pavement from "./pavement";
+import { Map } from "../models/world/Map";
+import { Perf } from "r3f-perf";
 
 const Eiffel = lazy(() => import("../models/eiffel/eiffel"));
 
@@ -29,12 +24,15 @@ const World = () => {
       <ambientLight intensity={1} />
 
       <directionalLight
-        position={[10, 10, 5]}
-        intensity={1}
+        // afternoon
+        // position={[150, 50, -50]}
+        // daylight
+        position={[30, 70, 30]}
+        intensity={2}
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
-        shadow-camera-far={500}
+        shadow-camera-far={120}
         shadow-camera-left={-100}
         shadow-camera-right={100}
         shadow-camera-top={100}
@@ -42,36 +40,14 @@ const World = () => {
       />
 
       <Physics timeStep={"vary"}>
-        <Suspense fallback={null}>
-          <Eiffel scale={10} position-y={-0.45} />
-
-          <RigidBody colliders="cuboid" type="fixed" friction={0.7}>
-            <Pavement rotation-x={-Math.PI / 2} receiveShadow />
-          </RigidBody>
-        </Suspense>
-
-        <RigidBody colliders="cuboid" type="fixed" friction={0.7}>
-          <mesh
-            position={[0, -0.1, 0]}
-            rotation={[-Math.PI / 2, 0, 0]}
-            receiveShadow
-          >
-            <planeGeometry args={[1000, 1000]} />
-            <meshStandardMaterial color="lightgreen" />
-          </mesh>
+        <RigidBody colliders="trimesh" type="fixed" friction={0.7}>
+          <Map />
         </RigidBody>
 
-        <Player position={[0, 0.5, -5]} />
+        <Player position={[0, 0.2, 0]} />
       </Physics>
 
-      {/* <ContactShadows
-        opacity={1}
-        scale={10}
-        blur={1}
-        far={100}
-        resolution={256}
-        color="#000000"
-      /> */}
+      <Perf />
     </Canvas>
   );
 };
