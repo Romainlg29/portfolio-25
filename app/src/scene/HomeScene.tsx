@@ -35,12 +35,11 @@ const HomeScene = () => {
         shadow-mapSize={1024}
       />
 
-      <pointLight position={[0, 0, 0]} intensity={0.5} />
-
       <ContactShadows
-        scale={10}
+        scale={20}
         far={1}
         blur={0.8}
+        resolution={256}
         color={scheme === ColorScheme.Dark ? "#fff" : "#000"}
       />
 

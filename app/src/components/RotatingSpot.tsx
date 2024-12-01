@@ -40,13 +40,21 @@ const RotatingSpot: FC<SpotProps> = ({
       rotation={[0, 0, 0]}
       color={color}
       penumbra={0.5}
-      distance={6}
+      distance={10}
       angle={Math.PI / 12}
       attenuation={4}
       anglePower={6}
       intensity={1}
       radiusTop={0.01}
       castShadow={castShadow}
+      shadow-mapSize-width={1024}
+      shadow-mapSize-height={1024}
+      shadow-camera-far={20}
+      shadow-camera-near={1}
+      shadow-camera-left={-20}
+      shadow-camera-right={20}
+      shadow-camera-top={20}
+      shadow-camera-bottom={-20}
       ref={ref}
     />
   );
