@@ -25,7 +25,7 @@ const LightShow: FC<LightShowProps> = ({ isGlittering = false }) => {
           key={index}
           position={position}
           intensity={0.1}
-          color={scheme === ColorScheme.Dark ? "#ff8040" : "#2060ff"}
+          color={scheme === ColorScheme.Dark ? "#ff8040" : "#9a4000"}
           ref={(light) => {
             if (light) {
               ref.current.push(light);

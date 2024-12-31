@@ -2,13 +2,14 @@ import { ContactShadows, Environment, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useSearch } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
-import { isChristmas, isHalloween } from "../constants/timing";
+import { isChristmas, isHalloween, isNewYear } from "../constants/timing";
 import { ColorScheme, useColorScheme } from "../hooks/useColorScheme";
 
 const Eiffel = lazy(() => import("../models/eiffel/Eiffel"));
 
 const HalloweenSet = lazy(() => import("./HalloweenSet"));
 const ChristmasSet = lazy(() => import("./ChristmasSet"));
+const NewYearSet = lazy(() => import("./NewYearSet"));
 
 const HomeScene = () => {
   const scheme = useColorScheme();
@@ -54,6 +55,9 @@ const HomeScene = () => {
           ) : null}
           {(isChristmas && !event) || event === "christmas" ? (
             <ChristmasSet />
+          ) : null}
+          {(isNewYear && !event) || event === "new-year" ? (
+            <NewYearSet />
           ) : null}
         </Suspense>
       </Suspense>

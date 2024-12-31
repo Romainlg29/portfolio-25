@@ -54,7 +54,7 @@ const Home = () => {
 };
 
 const searchParams = z.object({
-  event: z.enum(["halloween", "christmas"]).optional(),
+  event: z.enum(["halloween", "christmas", "new-year"]).optional(),
   from: z.string().optional(),
 });
 

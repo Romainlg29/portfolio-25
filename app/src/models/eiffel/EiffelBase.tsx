@@ -18,10 +18,10 @@ const EiffelBase: FC<GroupProps> = (props) => {
   // Material selection based on the color scheme
   const material = useMemo(() => {
     if (scheme === ColorScheme.Dark) {
-      return <meshStandardMaterial color="#333333" />;
+      return <meshStandardMaterial color="#333333" roughness={0.3} />;
     }
 
-    return <meshStandardMaterial color="#ffffff" />;
+    return <meshStandardMaterial color="#ffffff" roughness={0.3} />;
   }, [scheme]);
 
   const [animation] = useSpring(() => ({
